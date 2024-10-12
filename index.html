@@ -21,7 +21,7 @@
     <script type="module" src="./app.js"></script>
     <script>
       if("serviceWorker" in navigator) {
-              navigator.serviceWorker.register("sw.js")
+              navigator.serviceWorker.register("/de-dict/sw.js")
                 .then( registration => {
                         console.log("Service worker registration successful: ", registration);
                       },
