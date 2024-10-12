@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <title>Deutsch-Deutsches Wörterbuch</title>
-    <link href="bootstrap.min.css" rel="stylesheet" />
-    <link rel="manifest" href="de-de-dict.json" />
-    <link rel="icon" href="icons/dict.png" />
+    <link href="./bootstrap.min.css" rel="stylesheet" />
+    <link rel="manifest" href="./de-de-dict.json" />
+    <link rel="icon" href="./icons/dict.png" />
   </head>
   <body>
     <div class="container my-3 p-2 d-flex flex-column" style="font-family: Roboto" id="container">
@@ -21,7 +21,7 @@
     <script type="module" src="./app.js"></script>
     <script>
       if("serviceWorker" in navigator) {
-              navigator.serviceWorker.register("/de-dict/sw.js")
+              navigator.serviceWorker.register("./sw.js")
                 .then( registration => {
                         console.log("Service worker registration successful: ", registration);
                       },

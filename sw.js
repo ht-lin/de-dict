@@ -2,14 +2,14 @@ const VERSION = "v1";
 const CACHE_NAME = `De-dictionary-${VERSION}`;
 
 const APP_STATIC_RESOURCES = [
-  "/",
-  "/index.html",
-  "/bootstrap.min.css",
-  "/app.js",
-  "/loadDict.js",
-  "/parseDict.js",
-  "/icons/dict.png",
-  "/de-de-dict.json",
+  "./",
+  "./index.html",
+  "./bootstrap.min.css",
+  "./app.js",
+  "./loadDict.js",
+  "./parseDict.js",
+  "./icons/dict.png",
+  "./de-de-dict.json",
 ];
 
 self.addEventListener("install", (event) => {
