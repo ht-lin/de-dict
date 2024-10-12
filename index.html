@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Deutsch-Deutsches Wörterbuch</title>
+    <link href="bootstrap.min.css" rel="stylesheet" />
+    <link rel="manifest" href="de-de-dict.json" />
+    <link rel="icon" href="icons/dict.png" />
+  </head>
+  <body>
+    <div class="container my-3 p-2 d-flex flex-column" style="font-family: Roboto" id="container">
+      <h2 class="text-center mb-3">Deutsch-Deutsches Wörterbuch</h2>
+      <div class="input-group" id="search-group" >
+        <input type="text" class="form-control" id="search-input" autofocus />
+        <button class="btn btn-outline-secondary" type="button" id="search-button">Search</button>
+      </div> 
+      <ul class="list-group d-block" id="suggest-list"></ul>
+      <button type="button" class="btn btn-outline-danger my-3 mx-auto d-block d-none" id="clear-button" >Clear Result</button>
+      <div class="p-3" id="result-area"></div>
+    </div>
+    <script type="module" src="./app.js"></script>
+    <script>
+      if("serviceWorker" in navigator) {
+              navigator.serviceWorker.register("sw.js")
+                .then( registration => {
+                        console.log("Service worker registration successful: ", registration);
+                      },
+                        error => {
+                                console.error(`Service worker registration failed: ${error}`);
+                              },);
+            } else {
+                    console.error("Service workers are not supported.");
+                  }
+    </script>
+  </body>
+</html>

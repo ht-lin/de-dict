@@ -1,0 +1,15 @@
+{
+    "name": "Deutsch-Deutsches Wörterbuch",
+    "short_name": "de-dict",
+    "description": "Ein deutsches Wörterbuch-Suchprogramm",
+    "start_url": "/",
+    "theme_color": "#eeeeee",
+    "background_color": "#eeeeee",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "icons/dict.png",
+            "sizes": "512x512"
+        }
+    ]
+}

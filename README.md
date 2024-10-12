@@ -1,0 +1,1 @@
+This program is developed as a Progressive Web App (PWA), uses IndexedDB for local storage of dictionary entries, and utilizes Bootstrap for layout control. It can be used offline and can also be installed.
