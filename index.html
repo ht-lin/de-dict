@@ -11,7 +11,11 @@
   <body>
     <div class="container my-3 p-2 d-flex flex-column" style="font-family: Roboto" id="container">
       <h2 class="text-center mb-3">Deutsch-Deutsches Wörterbuch</h2>
-      <div class="input-group" id="search-group" >
+      <div class="d-flex justify-content-center" id="loading" >
+        <p class="fw-bold me-3">Loading Dictionary ...</p>
+        <div class="spinner-border" role="status" ></div>
+      </div>
+      <div class="input-group d-none" id="search-group" >
         <input type="text" class="form-control" id="search-input" autofocus />
         <button class="btn btn-outline-secondary" type="button" id="search-button">Search</button>
       </div> 

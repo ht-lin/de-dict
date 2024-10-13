@@ -7,6 +7,7 @@ const storeName = "de-de";
 function openDatabase() {
   return new Promise( (resolve, reject) => {
     const request = indexedDB.open(dbName, version);
+    let isUpgraded = true;
 
     request.onerror = (event) => {
       console.error("Fail to open Database: ", event.target.errorCode);
@@ -16,23 +17,27 @@ function openDatabase() {
     request.onsuccess = (event) => {
       const db = event.target.result;
       useDatabase(db);
-      resolve(db);
+      if(isUpgraded)
+        resolve(db);
     }
 
     request.onupgradeneeded = async (event) => {
+      isUpgraded = false;
+
       const db = event.target.result;
       useDatabase(db);
 
       const objectStore = db.createObjectStore(storeName, { keyPath: "word" });
-      let dictionary;
 
       try {
-        dictionary = await parseDict();
+        const dictionary = await parseDict();
+        await storeEntries(db, dictionary);
+        resolve(db);
       } catch (error) {
         console.error("Fail to get dictionay or write entries: ", errorCode);
       }
 
-      storeEntries(db, dictionary);
+      // storeEntries(db, dictionary);
     } 
 
     request.onblocked = (event) => {

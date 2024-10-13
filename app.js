@@ -1,6 +1,8 @@
 import { openDatabase, getDefinition, getWordsWithPrefix } from "./loadDict.js";
 
 const searchInput = document.getElementById("search-input");
+const loading = document.getElementById("loading");
+const searchGroup = document.getElementById("search-group");
 const searchButton = document.getElementById("search-button");
 const suggestList = document.getElementById("suggest-list");
 const clearButton = document.getElementById("clear-button");
@@ -11,6 +13,8 @@ let db;
 openDatabase( )
   .then( dBase => {
     db = dBase;
+    loading.classList.add("d-none");
+    searchGroup.classList.remove("d-none");
   } )
   .catch( error => {
     console.error("init error: ", errorCode);
@@ -38,6 +42,7 @@ searchButton.addEventListener("click", () => {
     showResult(word);
 
   searchInput.value = "";
+  suggestList.innerHTML = "";
 })
 
 searchInput.addEventListener("keydown", (e) => {
