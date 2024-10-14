@@ -17,7 +17,7 @@ openDatabase( )
     searchGroup.classList.remove("d-none");
   } )
   .catch( error => {
-    console.error("init error: ", errorCode);
+    console.error("init error: ", error);
   });
 
 function showResult(word) {
@@ -32,7 +32,7 @@ function showResult(word) {
     } )
     .catch( error => {
       resultArea.innerHTML = getError + resultArea.innerHTML;
-      console.error("Fail to search word: ", errorCode);
+      console.error("Failed to search word: ", error);
     } )
 }
 
@@ -84,7 +84,7 @@ searchInput.addEventListener("input", (e) => {
       } )
       .catch( error => {
         suggestList.innerHTML = "";
-        console.error("suggest error: ", errorCode);
+        console.error("suggest error: ", error);
       } )
   } else {
     suggestList.innerHTML = "";

@@ -10,7 +10,7 @@ function openDatabase() {
     let isUpgraded = true;
 
     request.onerror = (event) => {
-      console.error("Fail to open Database: ", event.target.errorCode);
+      console.error("Failed to open Database: ", event.target.error);
       reject(event.target.error);
     }
 
@@ -34,7 +34,7 @@ function openDatabase() {
         await storeEntries(db, dictionary);
         resolve(db);
       } catch (error) {
-        console.error("Fail to get dictionay or write entries: ", errorCode);
+        console.error("Failed to get dictionay or write entries: ", error);
       }
 
       // storeEntries(db, dictionary);
@@ -59,7 +59,7 @@ function storeEntries(db, dictionary) {
     const objectStore = transaction.objectStore(storeName);
 
     transaction.onerror = (event) => {
-      console.error("transaction error: ", event.target.errorCode);
+      console.error("transaction error: ", event.target.error);
       reject(event.target.error);
     }
 
@@ -75,7 +75,7 @@ function storeEntries(db, dictionary) {
 
       const request = objectStore.add({ word, definition });
       request.onerror = (event) => {
-        console.error("Fail to add entry: ", event.target.errorCode);
+        console.error("Failed to add entry: ", event.target.error);
       };
     } );
   } );
@@ -88,7 +88,7 @@ function getDefinition(word, db) {
     const request = objectStore.get(word);
 
     request.onerror = (event) => {
-      console.error("Fail to get defnition: ", event.target.errorCode);
+      console.error("Failed to get defnition: ", event.target.error);
       reject(event.target.error);
     };
 
@@ -112,13 +112,36 @@ function getWordsWithPrefix(pre, db) {
     const request = objectStore.getAllKeys(range, count);
 
     request.onerror = (event) => {
-      console.error("Fail to search with prefix: ", event.target.errorCode);
+      console.error("Failed to search with prefix: ", event.target.error);
       reject(event.target.error);
     };
 
     request.onsuccess = (event) => {
       const results = event.target.result;
-      resolve(results);
+
+      if(results.length < 10) {
+        const objectStore = db.transaction(storeName).objectStore(storeName);
+        const newPre = pre.charAt(0) === pre.charAt(0).toUpperCase()
+          ? pre.charAt(0).toLowerCase() + pre.slice(1)
+          : pre.charAt(0).toUpperCase() + pre.slice(1);
+        const newRange = IDBKeyRange.bound(newPre, newPre + '\uffff');
+        const newCount = 10 - results.length;
+
+        const newRequest = objectStore.getAllKeys(newRange, newCount);
+
+        newRequest.onerror = (event) => {
+          console.error("Failed to get new list: ", event.target.error);
+          reject(event.target.error);
+        }
+
+        newRequest.onsuccess = (event) => {
+          results.push(...event.target.result);
+          resolve(results);
+        }
+      }
+
+      if(!(results.length < 10))
+        resolve(results);
     };
   } );
 }
